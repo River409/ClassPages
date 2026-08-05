@@ -6,88 +6,154 @@ import {
     getDoc
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
+
 const searchInput = document.getElementById("domainSearch");
 const searchButton = document.getElementById("searchButton");
 const searchResult = document.getElementById("searchResult");
 const registerButton = document.getElementById("registerButton");
 
-console.log("Register button:", registerButton);
 
-searchButton.addEventListener("click", async () => {
+let extensions = {};
 
-    registerButton.style.display = "none";
 
-    const domain = searchInput.value.trim().toLowerCase();
+async function loadExtensions() {
 
-    if (!domain) {
-        searchResult.innerHTML = "❌ Please enter a domain.";
-        return;
-    }
+    const response = await fetch("data/extensions.json");
 
-    const parts = domain.split(".");
+    extensions = await response.json();
 
-    if (parts.length !== 2) {
-        searchResult.innerHTML = "❌ Invalid domain format.";
-        return;
-    }
+}
 
-    const extension = parts[1];
 
-    try {
+if (searchButton) {
 
-        // Does the registry exist?
-        const extensionSnap = await getDoc(
-            doc(db, "extensions", extension)
-        );
 
-        if (!extensionSnap.exists()) {
+    searchButton.addEventListener("click", async () => {
+
+
+        const domain = searchInput.value.trim().toLowerCase();
+
+
+        if (!domain.includes(".")) {
 
             searchResult.innerHTML =
-                `❌ The .${extension} registry does not exist.`;
+                "❌ Invalid domain.";
 
             return;
 
         }
 
-        // Is the domain already registered?
-        const domainSnap = await getDoc(
-            doc(db, "domains", domain)
-        );
 
-        if (domainSnap.exists()) {
+        const parts = domain.split(".");
 
-            const data = domainSnap.data();
 
-            searchResult.innerHTML = `
-                ❌ <b>${domain}</b> is already registered.<br>
-                Owner: ${data.ownerEmail ?? "Unknown"}
-            `;
+        if (parts.length !== 2) {
+
+            searchResult.innerHTML =
+                "❌ Invalid domain format.";
 
             return;
 
         }
 
-        // Domain is available
 
-        setCurrentDomain(domain);
+        const extension = parts[1];
 
-        const extensionData = extensionSnap.data();
 
-        searchResult.innerHTML = `
-            ✅ <b>${domain}</b> is available!<br>
-            Registry: .${extension}<br>
-            Policy: ${extensionData.policy}
-        `;
+        try {
 
-        registerButton.style.display = "inline-block";
 
-    } catch (error) {
+            const extensionRef =
+                doc(db, "extensions", extension);
 
-        console.error(error);
 
-        searchResult.innerHTML =
-            "❌ Error connecting to Firebase.";
+            const extensionSnap =
+                await getDoc(extensionRef);
 
-    }
 
-});
+
+            if (!extensionSnap.exists()) {
+
+                searchResult.innerHTML =
+                    `❌ The .${extension} registry does not exist.`;
+
+                return;
+
+            }
+
+
+
+            const extensionData =
+                extensionSnap.data();
+
+
+
+            const domainRef =
+                doc(db, "domains", domain);
+
+
+            const domainSnap =
+                await getDoc(domainRef);
+
+
+
+            if (domainSnap.exists()) {
+
+
+                const data =
+                    domainSnap.data();
+
+
+                searchResult.innerHTML =
+                `
+                ❌ <b>${domain}</b> is already registered.
+                <br>
+                Owner: ${data.ownerEmail || "Unknown"}
+                `;
+
+
+                if(registerButton)
+                    registerButton.style.display = "none";
+
+
+            } else {
+
+
+                searchResult.innerHTML =
+                `
+                ✅ <b>${domain}</b> is available!
+                <br>
+                Registry: .${extension}
+                <br>
+                Policy: ${extensionData.policy}
+                `;
+
+
+                setCurrentDomain(domain);
+
+
+                if(registerButton)
+                    registerButton.style.display = "inline-block";
+
+
+            }
+
+
+        } catch(error) {
+
+
+            console.error(error);
+
+            searchResult.innerHTML =
+                "❌ Firebase error.";
+
+        }
+
+
+    });
+
+
+}
+
+
+loadExtensions();
