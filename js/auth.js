@@ -7,49 +7,53 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
-// Register
-
 export async function register(email, password) {
 
     try {
 
-        const userCredential =
-            await createUserWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
+        const userCredential = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+        console.log("Account created:", userCredential.user);
 
         return userCredential.user;
 
-    } catch(error) {
+    } catch (error) {
 
-        console.error(error);
+        console.error("Registration error:", error.message);
+
+        alert(error.message);
+
         return null;
 
     }
 
 }
 
-
-// Login
 
 export async function login(email, password) {
 
     try {
 
-        const userCredential =
-            await signInWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
+        const userCredential = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+        console.log("Logged in:", userCredential.user);
 
         return userCredential.user;
 
-    } catch(error) {
+    } catch (error) {
 
-        console.error(error);
+        console.error("Login error:", error.message);
+
+        alert(error.message);
+
         return null;
 
     }
@@ -57,10 +61,18 @@ export async function login(email, password) {
 }
 
 
-// Logout
-
 export async function logout() {
 
-    await signOut(auth);
+    try {
+
+        await signOut(auth);
+
+        console.log("Logged out");
+
+    } catch(error) {
+
+        console.error(error);
+
+    }
 
 }
