@@ -25,15 +25,15 @@ ClassPages™ Builder
 </div>
 
 <div class="tagline">
-Create your website without code
+Create your website without coding
 </div>
 
 </div>
-
 
 
 
 <table class="nav" width="100%">
+
 <tr>
 
 <td>
@@ -45,12 +45,12 @@ Create your website without code
 </td>
 
 <td>
-<a href="builder.html">Website Builder</a>
+<a href="builder.html">Builder</a>
 </td>
 
 </tr>
-</table>
 
+</table>
 
 
 
@@ -59,23 +59,18 @@ Create your website without code
 
 
 <h2>
-Choose Editing Mode
+Editing Mode
 </h2>
 
 
-<button id="easyMode" class="button">
-
-Easy Builder
-
+<button id="htmlButton" class="button">
+💻 HTML Editor
 </button>
 
 
-<button id="htmlMode" class="button">
-
-HTML Editor
-
+<button id="easyButton" class="button">
+🧩 Easy Builder
 </button>
-
 
 
 </div>
@@ -84,9 +79,7 @@ HTML Editor
 
 
 
-
-
-<div id="easyBuilder" class="box">
+<div id="builderBox" class="box">
 
 
 <h2>
@@ -94,39 +87,46 @@ Website Settings
 </h2>
 
 
-<p>
-Title
-</p>
 
-<input id="siteTitle"
+<label>
+Website Title
+</label>
+
+<br>
+
+<input id="titleInput"
 placeholder="My Website">
 
 
-
-<p>
-Tagline
-</p>
-
-<input id="siteTagline"
-placeholder="Welcome to my site">
+<br><br>
 
 
 
-<p>
-About
-</p>
+<label>
+Description
+</label>
 
-<textarea id="siteAbout"
-placeholder="Write about yourself"></textarea>
-
+<br>
 
 
-<p>
-Theme Color
-</p>
+<textarea id="descriptionInput"
+placeholder="Welcome to my website"></textarea>
 
 
-<select id="siteColor">
+
+<br><br>
+
+
+
+<label>
+Theme
+</label>
+
+<br>
+
+
+<select id="themeInput">
+
 
 <option value="#92E81E">
 Green
@@ -156,14 +156,22 @@ Red
 </select>
 
 
-
 <br><br>
 
 
+
+<button id="addText" class="button">
++ Add Text
+</button>
+
+
+<button id="addButton" class="button">
++ Add Button
+</button>
+
+
 <button id="previewButton" class="button">
-
-Preview Website
-
+Preview
 </button>
 
 
@@ -176,8 +184,7 @@ Preview Website
 
 
 
-
-<div id="preview" class="box">
+<div class="box">
 
 
 <h2>
@@ -185,10 +192,13 @@ Preview
 </h2>
 
 
+<div id="preview">
+
+
 </div>
 
 
-
+</div>
 
 
 
