@@ -1,8 +1,18 @@
+import { db, auth } from "./firebase.js";
+
+import {
+    doc,
+    setDoc
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+
 const htmlButton =
 document.getElementById("htmlButton");
-
-const easyButton =
-document.getElementById("easyButton");
 
 
 const preview =
@@ -11,63 +21,82 @@ document.getElementById("preview");
 
 let extraContent = "";
 
+let currentUser = null;
+
+let currentDomain = null;
 
 
 
-// =====================
+// GET DOMAIN FROM URL
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+
+currentDomain =
+params.get("domain");
+
+
+
+
+// CHECK LOGIN
+
+onAuthStateChanged(auth,(user)=>{
+
+    currentUser = user;
+
+});
+
+
+
+
 // HTML EDITOR BUTTON
-// =====================
 
 htmlButton.onclick = () => {
 
-    const params =
-    new URLSearchParams(
-        window.location.search
-    );
-
-
-    const domain =
-    params.get("domain");
-
 
     window.location.href =
-    `editor.html?domain=${encodeURIComponent(domain)}`;
+    `editor.html?domain=${encodeURIComponent(currentDomain)}`;
+
 
 };
 
 
 
 
-// =====================
-// EASY BUILDER BUTTON
-// =====================
+// EASY MODE
 
-easyButton.onclick = () => {
+document
+.getElementById("easyButton")
+.onclick = () => {
 
-    document.getElementById("builderBox")
-    .style.display = "block";
+
+document
+.getElementById("builderBox")
+.style.display="block";
+
 
 };
 
 
 
 
-// =====================
 // ADD TEXT
-// =====================
 
 document
 .getElementById("addText")
 .onclick = () => {
 
 
-    extraContent += `
+extraContent += `
 
-    <p>
-    New text section
-    </p>
+<p>
+New text section
+</p>
 
-    `;
+`;
 
 
 };
@@ -75,34 +104,33 @@ document
 
 
 
-// =====================
 // ADD BUTTON
-// =====================
 
 document
 .getElementById("addButton")
 .onclick = () => {
 
 
-    extraContent += `
+extraContent += `
 
-    <button style="
-        background:#92E81E;
-        color:black;
-        padding:12px 25px;
-        border:none;
-        border-radius:10px;
-        font-weight:bold;
-        cursor:pointer;
-    ">
+<br>
 
-    Click Me
+<button style="
+background:#92E81E;
+padding:12px 25px;
+border:none;
+border-radius:10px;
+font-weight:bold;
+">
 
-    </button>
+Click Me
 
-    <br><br>
+</button>
 
-    `;
+
+<br>
+
+`;
 
 
 };
@@ -110,98 +138,116 @@ document
 
 
 
-// =====================
-// LIVE PREVIEW
-// =====================
+// CREATE HTML
 
-document
-.getElementById("previewButton")
-.onclick = () => {
-
+function generateHTML(){
 
 
 const title =
-document.getElementById("titleInput").value;
-
+document.getElementById("titleInput").value
+|| "My Website";
 
 
 const description =
-document.getElementById("descriptionInput").value;
+document.getElementById("descriptionInput").value
+|| "Welcome";
 
 
 
-const theme =
+const color =
 document.getElementById("themeInput").value;
 
 
 
 const font =
-document.getElementById("fontSelect")
-? document.getElementById("fontSelect").value
-: "Arial";
+document.getElementById("fontSelect").value;
 
 
 
 const size =
-document.getElementById("sizeInput")
-? document.getElementById("sizeInput").value
-: "32";
+document.getElementById("sizeInput").value;
 
 
 
 const align =
-document.getElementById("alignSelect")
-? document.getElementById("alignSelect").value
-: "center";
+document.getElementById("alignSelect").value;
 
 
 
 const style =
-document.getElementById("styleSelect")
-? document.getElementById("styleSelect").value
-: "normal";
+document.getElementById("styleSelect").value;
 
 
 
+return `
 
-preview.innerHTML = `
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>${title}</title>
 
 
-<div style="
+<style>
 
-background:${theme};
+body{
 
-padding:40px;
+font-family:${font};
+
+margin:0;
+
+}
+
+
+.header{
+
+background:${color};
 
 color:white;
 
-font-family:${font};
+padding:40px;
 
 text-align:${align};
 
 font-size:${size}px;
 
-font-weight:${style === "bold" ? "bold":"normal"};
+font-weight:${style};
 
-font-style:${style === "italic" ? "italic":"normal"};
+}
 
-border-radius:10px;
 
-box-shadow:0 3px 10px #555;
+.content{
 
-">
+padding:30px;
 
+}
+
+
+</style>
+
+
+</head>
+
+
+
+<body>
+
+
+
+<div class="header">
 
 <h1>
 
-${title || "My Website"}
+${title}
 
 </h1>
 
 
 <p>
 
-${description || "Welcome to my website"}
+${description}
 
 </p>
 
@@ -210,17 +256,7 @@ ${description || "Welcome to my website"}
 
 
 
-<div style="
-
-background:white;
-
-padding:30px;
-
-font-family:${font};
-
-text-align:${align};
-
-">
+<div class="content">
 
 
 ${extraContent}
@@ -229,7 +265,103 @@ ${extraContent}
 </div>
 
 
+
+</body>
+
+
+</html>
+
 `;
+
+}
+
+
+
+
+
+// PREVIEW
+
+document
+.getElementById("previewButton")
+.onclick = () => {
+
+
+preview.innerHTML =
+generateHTML();
+
+
+};
+
+
+
+
+// SAVE WEBSITE
+
+document
+.getElementById("saveButton")
+.onclick = async () => {
+
+
+
+if(!currentUser){
+
+alert("Please login first");
+
+return;
+
+}
+
+
+
+if(!currentDomain){
+
+alert("No domain selected");
+
+return;
+
+}
+
+
+
+const html =
+generateHTML();
+
+
+
+await setDoc(
+
+doc(
+db,
+"websites",
+currentDomain
+),
+
+{
+
+ownerUid:
+currentUser.uid,
+
+
+domain:
+currentDomain,
+
+
+html:
+html,
+
+
+updated:
+new Date()
+
+}
+
+);
+
+
+
+alert(
+"Website saved!"
+);
 
 
 
