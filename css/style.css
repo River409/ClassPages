@@ -122,6 +122,15 @@ table{
     padding:8px;
     border-bottom:1px solid #ddd;
 }
+{
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+    text-decoration: none;
+}
 
 .footer{
     background:#1e4b90;
