@@ -1,0 +1,22 @@
+{
+  "hg": {
+    "owner": "Hugo",
+    "policy": "open"
+  },
+  "se": {
+    "owner": "Sebastian",
+    "policy": "open"
+  },
+  "dn": {
+    "owner": "Daniel",
+    "policy": "closed"
+  },
+  "vt": {
+    "owner": "Victor",
+    "policy": "closed"
+  },
+  "em": {
+    "owner": "Emma",
+    "policy": "closed"
+  }
+}
