@@ -1,5 +1,3 @@
-import { db, auth } from "./firebase.js";
+import "./firebase.js";
 
-console.log("Firebase connected!");
-console.log(db);
-console.log(auth);
+console.log("ClassPages loaded.");
