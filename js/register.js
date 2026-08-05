@@ -20,7 +20,6 @@ registerButton.addEventListener("click", async () => {
     if (!user) {
 
         alert("Please log in first.");
-
         return;
 
     }
@@ -32,16 +31,40 @@ registerButton.addEventListener("click", async () => {
             doc(db, "domains", currentDomain),
 
             {
+
+                domain: currentDomain,
+
                 ownerUid: user.uid,
+
                 ownerEmail: user.email,
+
                 createdAt: new Date().toISOString()
+
             }
 
         );
 
-        alert(currentDomain + " registered!");
-
         registerButton.style.display = "none";
+
+        const result = document.getElementById("searchResult");
+
+        result.innerHTML = `
+            ✅ <b>${currentDomain}</b> registered successfully!
+            <br><br>
+
+            <button id="editSiteButton" class="button">
+                Edit Website
+            </button>
+        `;
+
+        document
+            .getElementById("editSiteButton")
+            .addEventListener("click", () => {
+
+                window.location.href =
+                    `editor.html?domain=${encodeURIComponent(currentDomain)}`;
+
+            });
 
     } catch (error) {
 
