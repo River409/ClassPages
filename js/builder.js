@@ -1,13 +1,10 @@
-const easyMode =
-document.getElementById("easyMode");
+const htmlButton =
+document.getElementById("htmlButton");
 
 
-const htmlMode =
-document.getElementById("htmlMode");
+const easyButton =
+document.getElementById("easyButton");
 
-
-const easyBuilder =
-document.getElementById("easyBuilder");
 
 
 const preview =
@@ -15,20 +12,93 @@ document.getElementById("preview");
 
 
 
-htmlMode.onclick = () => {
+let extraContent = "";
 
-    window.location.href =
-    "editor.html";
+
+
+
+// HTML EDITOR BUTTON
+
+htmlButton.onclick = () => {
+
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+
+const domain =
+params.get("domain");
+
+
+
+window.location.href =
+`editor.html?domain=${encodeURIComponent(domain)}`;
+
 
 };
 
 
 
-easyMode.onclick = () => {
 
-    easyBuilder.style.display="block";
+
+easyButton.onclick = () => {
+
+document.getElementById("builderBox")
+.style.display="block";
 
 };
+
+
+
+
+
+
+
+document
+.getElementById("addText")
+.onclick = () => {
+
+
+extraContent += `
+
+<p>
+New text section
+</p>
+
+`;
+
+
+};
+
+
+
+
+
+
+
+document
+.getElementById("addButton")
+.onclick = () => {
+
+
+extraContent += `
+
+<button class="button">
+
+Click Me
+
+</button>
+
+<br><br>
+
+`;
+
+
+};
+
+
 
 
 
@@ -39,20 +109,20 @@ document
 .onclick = () => {
 
 
+
 const title =
-document.getElementById("siteTitle").value;
+document.getElementById("titleInput").value;
 
 
-const tagline =
-document.getElementById("siteTagline").value;
+
+const description =
+document.getElementById("descriptionInput").value;
 
 
-const about =
-document.getElementById("siteAbout").value;
 
+const theme =
+document.getElementById("themeInput").value;
 
-const color =
-document.getElementById("siteColor").value;
 
 
 
@@ -60,7 +130,7 @@ preview.innerHTML = `
 
 
 <div style="
-background:${color};
+background:${theme};
 padding:30px;
 color:white;
 font-family:Arial;
@@ -73,7 +143,7 @@ ${title}
 
 
 <p>
-${tagline}
+${description}
 </p>
 
 
@@ -84,24 +154,17 @@ ${tagline}
 <div style="
 background:white;
 padding:20px;
-font-family:Arial;
 ">
 
 
-<h2>
-About
-</h2>
-
-
-<p>
-${about}
-</p>
+${extraContent}
 
 
 </div>
 
 
 `;
+
 
 
 };
