@@ -1,84 +1,74 @@
-console.log("search.js started");
+import { db } from "./firebase.js";
+
+import {
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
 
 const searchInput = document.getElementById("domainSearch");
 const searchButton = document.getElementById("searchButton");
 const searchResult = document.getElementById("searchResult");
 
-let extensions = {};
 
-async function loadExtensions() {
-    try {
-        const response = await fetch("data/extensions.json");
-
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-        }
-
-        extensions = await response.json();
-
-        console.log("Extensions loaded:", extensions);
-    } catch (error) {
-        console.error("Failed to load extensions.json:", error);
-        searchResult.innerHTML = "❌ Failed to load extension database.";
-    }
-}
-
-searchButton.addEventListener("click", () => {
-
-    console.log("Search button clicked!");
+searchButton.addEventListener("click", async () => {
 
     const domain = searchInput.value.trim().toLowerCase();
 
-    console.log("Domain:", domain);
-
-    if (!domain) {
-        searchResult.innerHTML = "❌ Please enter a domain.";
-        return;
-    }
-
     if (!domain.includes(".")) {
-        searchResult.innerHTML = "❌ Invalid domain format.";
+        searchResult.innerHTML = "❌ Invalid domain.";
         return;
     }
 
-    const extension = domain.split(".")[1];
 
-    console.log("Extension:", extension);
+    const parts = domain.split(".");
 
-    if (extensions[extension]) {
+    const extension = parts[1];
 
-        console.log("Registry found:", extensions[extension]);
 
-        if (extensions[extension].policy === "open") {
+    // Check if extension exists
 
-            searchResult.innerHTML = `
-                <b>✅ ${domain}</b><br>
-                Registry: .${extension}<br>
-                Owner: ${extensions[extension].owner}<br>
-                Policy: Open
-            `;
+    const extensionRef = doc(
+        db,
+        "extensions",
+        extension
+    );
 
-        } else {
+    const extensionSnap = await getDoc(extensionRef);
 
-            searchResult.innerHTML = `
-                <b>🔒 ${domain}</b><br>
-                Registry: .${extension}<br>
-                Owner: ${extensions[extension].owner}<br>
-                Policy: Closed
-            `;
 
-        }
+    if (!extensionSnap.exists()) {
+
+        searchResult.innerHTML =
+        `❌ .${extension} is not a valid registry.`;
+
+        return;
+
+    }
+
+
+    // Check if domain is registered
+
+    const domainRef = doc(
+        db,
+        "domains",
+        domain
+    );
+
+
+    const domainSnap = await getDoc(domainRef);
+
+
+    if (domainSnap.exists()) {
+
+        searchResult.innerHTML =
+        `❌ ${domain} is already registered.`;
 
     } else {
 
-        console.log("Registry does not exist.");
-
-        searchResult.innerHTML = `
-            ❌ The registry <b>.${extension}</b> does not exist.
-        `;
+        searchResult.innerHTML =
+        `✅ ${domain} is available!`;
 
     }
 
 });
-
-loadExtensions();
