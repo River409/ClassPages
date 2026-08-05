@@ -1,4 +1,7 @@
 import "./firebase.js";
+
+console.log("Firebase loaded");
+
 import "./search.js";
 
-console.log("ClassPages loaded.");
+console.log("Search loaded");
