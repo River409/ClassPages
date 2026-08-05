@@ -1,68 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>ClassPages Website Builder</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+.builderGrid {
+
+    display:grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap:20px;
+
+}
+
+
+input, textarea, select {
+
+    width:90%;
+
+    padding:8px;
+
+    margin-bottom:10px;
+
+}
+
+
+textarea {
+
+    height:100px;
+
+}
+
+
+.previewBox {
+
+    min-height:300px;
+
+    background:#eeeeee;
+
+    padding:20px;
+
+    border:1px solid #999;
+
+}
+
+
+.toolButton {
+
+    margin:5px;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+
+<body>
+
+
+<div id="container">
+
+
+
+<div class="header">
+
+<div class="logo">
+
+ClassPages™ Builder
+
+</div>
+
+
+<div class="tagline">
+
+Create websites without code
+
+</div>
+
+
+</div>
+
+
+
+
+
+<table class="nav" width="100%">
+
+<tr>
+
+<td>
+
+<a href="index.html">
+
+Home
+
+</a>
+
+</td>
+
+
+<td>
+
+<a href="domains.html">
+
+Domains
+
+</a>
+
+</td>
+
+
+<td>
+
+<a href="builder.html">
+
+Builder
+
+</a>
+
+</td>
+
+
+</tr>
+
+</table>
+
+
+
+
+
+
 <div class="box">
 
+
 <h2>
-Design Settings
+
+Editing Mode
+
 </h2>
 
 
+
+<button 
+id="htmlButton"
+class="button">
+
+💻 HTML Editor
+
+</button>
+
+
+
+<button 
+id="easyButton"
+class="button">
+
+🧩 Easy Builder
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="builderGrid">
+
+
+
+
+
+<div>
+
+
+
+
+<div id="builderBox" class="box">
+
+
+<h2>
+
+Website Settings
+
+</h2>
+
+
+
+
 <label>
-Font
+
+Website Title
+
 </label>
 
-<select id="fontSelect">
 
-<option>
-Arial
+<br>
+
+
+<input
+
+id="titleInput"
+
+placeholder="My Website">
+
+
+<br>
+
+
+
+
+
+<label>
+
+Description
+
+</label>
+
+
+<br>
+
+
+<textarea
+
+id="descriptionInput"
+
+placeholder="Welcome to my website">
+
+</textarea>
+
+
+<br>
+
+
+
+
+
+<label>
+
+Theme Color
+
+</label>
+
+
+<br>
+
+
+<select id="themeInput">
+
+
+<option value="#92E81E">
+
+Green
+
 </option>
 
-<option>
-Verdana
+
+<option value="#008080">
+
+Teal
+
 </option>
 
-<option>
-Georgia
+
+<option value="#663399">
+
+Purple
+
 </option>
 
-<option>
-Courier New
+
+<option value="#C2185B">
+
+Pink
+
 </option>
+
+
+<option value="#E02B1B">
+
+Red
+
+</option>
+
+
+<option value="#0066ff">
+
+Blue
+
+</option>
+
 
 </select>
 
 
-<br><br>
+
+</div>
+
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h2>
+
+Text Design
+
+</h2>
+
+
 
 
 <label>
-Text Size
+
+Font
+
 </label>
 
-<input 
+
+<br>
+
+
+<select id="fontSelect">
+
+
+<option value="Arial">
+
+Arial
+
+</option>
+
+
+
+<option value="Verdana">
+
+Verdana
+
+</option>
+
+
+
+<option value="Georgia">
+
+Georgia
+
+</option>
+
+
+
+<option value="Courier New">
+
+Courier New
+
+</option>
+
+
+</select>
+
+
+
+
+<br><br>
+
+
+
+
+
+<label>
+
+Text Size
+
+</label>
+
+
+<br>
+
+
+<input
+
 id="sizeInput"
+
 type="number"
+
 value="32">
 
 
-<br><br>
+<br>
+
+
+
 
 
 <label>
-Alignment
+
+Position
+
 </label>
+
+
+<br>
 
 
 <select id="alignSelect">
 
+
 <option value="left">
+
 Left
+
 </option>
+
 
 <option value="center">
+
 Center
+
 </option>
 
+
 <option value="right">
+
 Right
+
 </option>
 
 
@@ -73,30 +455,180 @@ Right
 <br><br>
 
 
+
+
+
 <label>
+
 Style
+
 </label>
+
+
+<br>
 
 
 <select id="styleSelect">
 
 
 <option value="normal">
+
 Normal
+
 </option>
 
 
 <option value="bold">
+
 Bold
+
 </option>
 
 
 <option value="italic">
+
 Italic
+
 </option>
 
 
 </select>
 
 
+
 </div>
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h2>
+
+Add Elements
+
+</h2>
+
+
+
+<button
+
+id="addText"
+
+class="button toolButton">
+
++ Add Text
+
+</button>
+
+
+
+
+<button
+
+id="addButton"
+
+class="button toolButton">
+
++ Add Button
+
+</button>
+
+
+
+<br><br>
+
+
+
+<button
+
+id="previewButton"
+
+class="button">
+
+Preview Website
+
+</button>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<div>
+
+
+<div class="box">
+
+
+<h2>
+
+Live Preview
+
+</h2>
+
+
+
+<div
+
+id="preview"
+
+class="previewBox">
+
+
+Your website preview appears here.
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+<div class="footer">
+
+© 2026 ClassPages Inc.
+
+</div>
+
+
+
+
+</div>
+
+
+
+<script type="module" src="js/builder.js"></script>
+
+
+</body>
+
+</html>
