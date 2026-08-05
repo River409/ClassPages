@@ -1,157 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-
-<title>ClassPages Website Builder</title>
-
-<link rel="stylesheet" href="css/style.css">
-
-</head>
-
-
-<body>
-
-
-<div id="container">
-
-
-<div class="header">
-
-<div class="logo">
-ClassPages™ Builder
-</div>
-
-<div class="tagline">
-Create your website without coding
-</div>
-
-</div>
-
-
-
-<table class="nav" width="100%">
-
-<tr>
-
-<td>
-<a href="index.html">Home</a>
-</td>
-
-<td>
-<a href="domains.html">Domains</a>
-</td>
-
-<td>
-<a href="builder.html">Builder</a>
-</td>
-
-</tr>
-
-</table>
-
-
-
-
 <div class="box">
 
-
 <h2>
-Editing Mode
+Design Settings
 </h2>
 
 
-<button id="htmlButton" class="button">
-💻 HTML Editor
-</button>
-
-
-<button id="easyButton" class="button">
-🧩 Easy Builder
-</button>
-
-
-</div>
-
-
-
-
-
-<div id="builderBox" class="box">
-
-
-<h2>
-Website Settings
-</h2>
-
-
-
 <label>
-Website Title
+Font
 </label>
 
-<br>
+<select id="fontSelect">
 
-<input id="titleInput"
-placeholder="My Website">
-
-
-<br><br>
-
-
-
-<label>
-Description
-</label>
-
-<br>
-
-
-<textarea id="descriptionInput"
-placeholder="Welcome to my website"></textarea>
-
-
-
-<br><br>
-
-
-
-<label>
-Theme
-</label>
-
-<br>
-
-
-<select id="themeInput">
-
-
-<option value="#92E81E">
-Green
+<option>
+Arial
 </option>
 
-
-<option value="#008080">
-Teal
+<option>
+Verdana
 </option>
 
-
-<option value="#663399">
-Purple
+<option>
+Georgia
 </option>
 
-
-<option value="#C2185B">
-Pink
+<option>
+Courier New
 </option>
-
-
-<option value="#E02B1B">
-Red
-</option>
-
 
 </select>
 
@@ -159,56 +33,70 @@ Red
 <br><br>
 
 
+<label>
+Text Size
+</label>
 
-<button id="addText" class="button">
-+ Add Text
-</button>
+<input 
+id="sizeInput"
+type="number"
+value="32">
 
 
-<button id="addButton" class="button">
-+ Add Button
-</button>
+<br><br>
 
 
-<button id="previewButton" class="button">
-Preview
-</button>
+<label>
+Alignment
+</label>
 
+
+<select id="alignSelect">
+
+<option value="left">
+Left
+</option>
+
+<option value="center">
+Center
+</option>
+
+<option value="right">
+Right
+</option>
+
+
+</select>
+
+
+
+<br><br>
+
+
+<label>
+Style
+</label>
+
+
+<select id="styleSelect">
+
+
+<option value="normal">
+Normal
+</option>
+
+
+<option value="bold">
+Bold
+</option>
+
+
+<option value="italic">
+Italic
+</option>
+
+
+</select>
 
 
 </div>
-
-
-
-
-
-
-
-<div class="box">
-
-
-<h2>
-Preview
-</h2>
-
-
-<div id="preview">
-
-
-</div>
-
-
-</div>
-
-
-
-
-</div>
-
-
-<script type="module" src="js/builder.js"></script>
-
-
-</body>
-
-</html>
