@@ -9,7 +9,7 @@
   },
   "dn": {
     "owner": "Daniel",
-    "policy": "closed"
+    "policy": "open"
   },
   "vt": {
     "owner": "Victor",
@@ -17,6 +17,34 @@
   },
   "em": {
     "owner": "Emma",
+    "policy": "closed"
+    },
+  "ls": {
+    "owner": "Luis",
+    "policy": "open"
+      },
+  "vt": {
+    "owner": "Victor",
+    "policy": "open"
+      },
+  "ca": {
+    "owner": "Camden",
+    "policy": "open"
+      },
+  "in": {
+    "owner": "Inés",
+    "policy": "closed"
+      },
+  "vl": {
+    "owner": "Valentina",
+    "policy": "closed"
+      },
+  "gb": {
+    "owner": "Gabriel",
+    "policy": "closed"
+      },
+  "jn": {
+    "owner": "Juan",
     "policy": "closed"
   }
 }
