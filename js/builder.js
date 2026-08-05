@@ -1,33 +1,22 @@
 import { db, auth } from "./firebase.js";
 
 import {
-    doc,
-    setDoc
+doc,
+setDoc
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
+
 import {
-    onAuthStateChanged
+onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-
-
-const htmlButton =
-document.getElementById("htmlButton");
-
-
-const preview =
-document.getElementById("preview");
 
 
 let extraContent = "";
 
 let currentUser = null;
 
-let currentDomain = null;
 
-
-
-// GET DOMAIN FROM URL
 
 const params =
 new URLSearchParams(
@@ -35,30 +24,30 @@ window.location.search
 );
 
 
-currentDomain =
+const currentDomain =
 params.get("domain");
 
 
 
 
-// CHECK LOGIN
 
 onAuthStateChanged(auth,(user)=>{
 
-    currentUser = user;
+currentUser = user;
 
 });
 
 
 
 
-// HTML EDITOR BUTTON
 
-htmlButton.onclick = () => {
+document
+.getElementById("htmlButton")
+.onclick = () => {
 
 
-    window.location.href =
-    `editor.html?domain=${encodeURIComponent(currentDomain)}`;
+window.location.href =
+`editor.html?domain=${encodeURIComponent(currentDomain)}`;
 
 
 };
@@ -66,7 +55,7 @@ htmlButton.onclick = () => {
 
 
 
-// EASY MODE
+
 
 document
 .getElementById("easyButton")
@@ -83,7 +72,8 @@ document
 
 
 
-// ADD TEXT
+
+
 
 document
 .getElementById("addText")
@@ -93,7 +83,9 @@ document
 extraContent += `
 
 <p>
+
 New text section
+
 </p>
 
 `;
@@ -104,7 +96,8 @@ New text section
 
 
 
-// ADD BUTTON
+
+
 
 document
 .getElementById("addButton")
@@ -113,14 +106,22 @@ document
 
 extraContent += `
 
+
 <br>
 
+
 <button style="
+
 background:#92E81E;
+
 padding:12px 25px;
+
 border:none;
+
 border-radius:10px;
+
 font-weight:bold;
+
 ">
 
 Click Me
@@ -130,6 +131,7 @@ Click Me
 
 <br>
 
+
 `;
 
 
@@ -138,7 +140,68 @@ Click Me
 
 
 
-// CREATE HTML
+
+
+
+document
+.getElementById("addImage")
+.onclick = () => {
+
+
+
+const url =
+document
+.getElementById("imageInput")
+.value;
+
+
+
+if(!url){
+
+alert("Paste an image link first");
+
+return;
+
+}
+
+
+
+
+extraContent += `
+
+
+<div style="text-align:center;margin:20px;">
+
+
+<img src="${url}"
+
+style="
+
+max-width:90%;
+
+border-radius:10px;
+
+box-shadow:0 3px 8px #777;
+
+">
+
+
+</div>
+
+
+`;
+
+
+
+};
+
+
+
+
+
+
+
+
 
 function generateHTML(){
 
@@ -185,18 +248,21 @@ return `
 
 <html>
 
+
 <head>
+
 
 <title>${title}</title>
 
 
 <style>
 
+
 body{
 
-font-family:${font};
-
 margin:0;
+
+font-family:${font};
 
 }
 
@@ -218,11 +284,13 @@ font-weight:${style};
 }
 
 
+
 .content{
 
 padding:30px;
 
 }
+
 
 
 </style>
@@ -237,6 +305,7 @@ padding:30px;
 
 
 <div class="header">
+
 
 <h1>
 
@@ -253,6 +322,7 @@ ${description}
 
 
 </div>
+
 
 
 
@@ -279,14 +349,17 @@ ${extraContent}
 
 
 
-// PREVIEW
+
+
 
 document
 .getElementById("previewButton")
 .onclick = () => {
 
 
-preview.innerHTML =
+document
+.getElementById("preview")
+.innerHTML =
 generateHTML();
 
 
@@ -295,7 +368,9 @@ generateHTML();
 
 
 
-// SAVE WEBSITE
+
+
+
 
 document
 .getElementById("saveButton")
@@ -305,26 +380,11 @@ document
 
 if(!currentUser){
 
-alert("Please login first");
+alert("Login first");
 
 return;
 
 }
-
-
-
-if(!currentDomain){
-
-alert("No domain selected");
-
-return;
-
-}
-
-
-
-const html =
-generateHTML();
 
 
 
@@ -347,7 +407,7 @@ currentDomain,
 
 
 html:
-html,
+generateHTML(),
 
 
 updated:
@@ -359,9 +419,7 @@ new Date()
 
 
 
-alert(
-"Website saved!"
-);
+alert("Website saved!");
 
 
 
