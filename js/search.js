@@ -15,18 +15,31 @@ searchButton.addEventListener("click", async () => {
 
     const domain = searchInput.value.trim().toLowerCase();
 
+    if (!domain) {
+        searchResult.innerHTML = "❌ Please enter a domain.";
+        return;
+    }
+
+
     if (!domain.includes(".")) {
-        searchResult.innerHTML = "❌ Invalid domain.";
+        searchResult.innerHTML = "❌ Invalid domain format.";
         return;
     }
 
 
     const parts = domain.split(".");
 
+    const name = parts[0];
     const extension = parts[1];
 
 
-    // Check if extension exists
+    if (!name || !extension) {
+        searchResult.innerHTML = "❌ Invalid domain.";
+        return;
+    }
+
+
+    // Check if the extension exists
 
     const extensionRef = doc(
         db,
@@ -34,20 +47,24 @@ searchButton.addEventListener("click", async () => {
         extension
     );
 
+
     const extensionSnap = await getDoc(extensionRef);
 
 
     if (!extensionSnap.exists()) {
 
         searchResult.innerHTML =
-        `❌ .${extension} is not a valid registry.`;
+        `❌ The .${extension} registry does not exist.`;
 
         return;
 
     }
 
 
-    // Check if domain is registered
+    const extensionData = extensionSnap.data();
+
+
+    // Check if the full domain is already registered
 
     const domainRef = doc(
         db,
@@ -61,13 +78,20 @@ searchButton.addEventListener("click", async () => {
 
     if (domainSnap.exists()) {
 
-        searchResult.innerHTML =
-        `❌ ${domain} is already registered.`;
+        const domainData = domainSnap.data();
+
+        searchResult.innerHTML = `
+            ❌ <b>${domain}</b> is already registered.<br>
+            Owner: ${domainData.owner || "Unknown"}
+        `;
 
     } else {
 
-        searchResult.innerHTML =
-        `✅ ${domain} is available!`;
+        searchResult.innerHTML = `
+            ✅ <b>${domain}</b> is available!<br>
+            Registry: .${extension}<br>
+            Policy: ${extensionData.policy}
+        `;
 
     }
 
