@@ -18,28 +18,35 @@ registerButton.addEventListener("click", async () => {
     const user = auth.currentUser;
 
     if (!user) {
+
         alert("Please log in first.");
+
         return;
+
     }
 
     try {
 
         await setDoc(
+
             doc(db, "domains", currentDomain),
+
             {
                 ownerUid: user.uid,
                 ownerEmail: user.email,
                 createdAt: new Date().toISOString()
             }
+
         );
 
-        alert(currentDomain + " registered successfully!");
+        alert(currentDomain + " registered!");
 
         registerButton.style.display = "none";
 
     } catch (error) {
 
         console.error(error);
+
         alert(error.message);
 
     }
