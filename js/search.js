@@ -11,19 +11,16 @@ const searchButton = document.getElementById("searchButton");
 const searchResult = document.getElementById("searchResult");
 const registerButton = document.getElementById("registerButton");
 
-searchButton.addEventListener("click", async () => {
+console.log("Register button:", registerButton);
 
-    const domain = searchInput.value.trim().toLowerCase();
+searchButton.addEventListener("click", async () => {
 
     registerButton.style.display = "none";
 
+    const domain = searchInput.value.trim().toLowerCase();
+
     if (!domain) {
         searchResult.innerHTML = "❌ Please enter a domain.";
-        return;
-    }
-
-    if (!domain.includes(".")) {
-        searchResult.innerHTML = "❌ Invalid domain format.";
         return;
     }
 
@@ -38,50 +35,58 @@ searchButton.addEventListener("click", async () => {
 
     try {
 
-        // Check if the registry exists
-        const extensionRef = doc(db, "extensions", extension);
-        const extensionSnap = await getDoc(extensionRef);
+        // Does the registry exist?
+        const extensionSnap = await getDoc(
+            doc(db, "extensions", extension)
+        );
 
         if (!extensionSnap.exists()) {
-            searchResult.innerHTML = `❌ The .${extension} registry does not exist.`;
+
+            searchResult.innerHTML =
+                `❌ The .${extension} registry does not exist.`;
+
             return;
+
         }
 
-        const extensionData = extensionSnap.data();
-
-        // Check if the domain is already registered
-        const domainRef = doc(db, "domains", domain);
-        const domainSnap = await getDoc(domainRef);
+        // Is the domain already registered?
+        const domainSnap = await getDoc(
+            doc(db, "domains", domain)
+        );
 
         if (domainSnap.exists()) {
 
-            const domainData = domainSnap.data();
+            const data = domainSnap.data();
 
             searchResult.innerHTML = `
                 ❌ <b>${domain}</b> is already registered.<br>
-                Owner: ${domainData.ownerEmail || "Unknown"}
+                Owner: ${data.ownerEmail ?? "Unknown"}
             `;
 
-            registerButton.style.display = "none";
-
-        } else {
-
-            searchResult.innerHTML = `
-                ✅ <b>${domain}</b> is available!<br>
-                Registry: .${extension}<br>
-                Policy: ${extensionData.policy}
-            `;
-
-            setCurrentDomain(domain);
-
-            registerButton.style.display = "inline-block";
+            return;
 
         }
+
+        // Domain is available
+
+        setCurrentDomain(domain);
+
+        const extensionData = extensionSnap.data();
+
+        searchResult.innerHTML = `
+            ✅ <b>${domain}</b> is available!<br>
+            Registry: .${extension}<br>
+            Policy: ${extensionData.policy}
+        `;
+
+        registerButton.style.display = "inline-block";
 
     } catch (error) {
 
         console.error(error);
-        searchResult.innerHTML = "❌ Error connecting to Firebase.";
+
+        searchResult.innerHTML =
+            "❌ Error connecting to Firebase.";
 
     }
 
