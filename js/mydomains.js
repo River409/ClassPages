@@ -11,16 +11,20 @@ import {
 
 const container = document.getElementById("myDomains");
 
+console.log("mydomains.js loaded");
+
 onAuthStateChanged(auth, async (user) => {
 
-    if (!container) return;
+    console.log("Auth state changed:", user);
+
+    if (!container) {
+        console.log("myDomains container not found");
+        return;
+    }
 
     if (!user) {
-
         container.innerHTML = "Please log in.";
-
         return;
-
     }
 
     container.innerHTML = "Loading...";
@@ -33,23 +37,17 @@ onAuthStateChanged(auth, async (user) => {
 
         const data = docSnap.data();
 
+        console.log(data);
+
         if (data.ownerUid === user.uid) {
 
             html += `
-                <div style="margin-bottom:10px;">
-
-                    🌐 <b>${data.domain}</b>
-
-                    <br>
-
-                    <button
-                        class="button editSiteButton"
+                <div style="margin-bottom:10px">
+                    🌐 <b>${data.domain}</b><br>
+                    <button class="button editSiteButton"
                         data-domain="${data.domain}">
-
                         Edit Website
-
                     </button>
-
                 </div>
             `;
 
@@ -65,19 +63,15 @@ onAuthStateChanged(auth, async (user) => {
 
     container.innerHTML = html;
 
-    document
-        .querySelectorAll(".editSiteButton")
-        .forEach(button => {
+    document.querySelectorAll(".editSiteButton").forEach(button => {
 
-            button.onclick = () => {
+        button.onclick = () => {
 
-                const domain = button.dataset.domain;
+            window.location.href =
+                `editor.html?domain=${encodeURIComponent(button.dataset.domain)}`;
 
-                window.location.href =
-                    `editor.html?domain=${encodeURIComponent(domain)}`;
+        };
 
-            };
-
-        });
+    });
 
 });
