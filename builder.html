@@ -9,53 +9,46 @@
 
 <link rel="stylesheet" href="css/style.css">
 
+
 <style>
 
 .builderGrid {
 
-    display:grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap:20px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
 
 }
 
 
 input, textarea, select {
 
-    width:90%;
-
-    padding:8px;
-
-    margin-bottom:10px;
+width:90%;
+padding:8px;
 
 }
 
 
 textarea {
 
-    height:100px;
+height:100px;
 
 }
 
 
 .previewBox {
 
-    min-height:300px;
-
-    background:#eeeeee;
-
-    padding:20px;
-
-    border:1px solid #999;
+min-height:300px;
+background:#eee;
+padding:20px;
+border:1px solid #999;
 
 }
 
 
 .toolButton {
 
-    margin:5px;
+margin:5px;
 
 }
 
@@ -64,7 +57,6 @@ textarea {
 
 
 </head>
-
 
 
 <body>
@@ -85,10 +77,9 @@ ClassPages™ Builder
 
 <div class="tagline">
 
-Create websites without code
+Create your website without code
 
 </div>
-
 
 </div>
 
@@ -101,35 +92,17 @@ Create websites without code
 <tr>
 
 <td>
-
-<a href="index.html">
-
-Home
-
-</a>
-
+<a href="index.html">Home</a>
 </td>
 
 
 <td>
-
-<a href="domains.html">
-
-Domains
-
-</a>
-
+<a href="domains.html">Domains</a>
 </td>
 
 
 <td>
-
-<a href="builder.html">
-
-Builder
-
-</a>
-
+<a href="builder.html">Builder</a>
 </td>
 
 
@@ -142,20 +115,16 @@ Builder
 
 
 
+
 <div class="box">
 
 
 <h2>
-
 Editing Mode
-
 </h2>
 
 
-
-<button 
-id="htmlButton"
-class="button">
+<button id="htmlButton" class="button">
 
 💻 HTML Editor
 
@@ -163,19 +132,14 @@ class="button">
 
 
 
-<button 
-id="easyButton"
-class="button">
+<button id="easyButton" class="button">
 
 🧩 Easy Builder
 
 </button>
 
 
-
 </div>
-
-
 
 
 
@@ -189,7 +153,9 @@ class="button">
 
 
 
+
 <div>
+
 
 
 
@@ -198,74 +164,43 @@ class="button">
 
 
 <h2>
-
 Website Settings
-
 </h2>
 
 
-
-
 <label>
-
-Website Title
-
+Title
 </label>
-
 
 <br>
 
-
-<input
-
-id="titleInput"
-
+<input id="titleInput"
 placeholder="My Website">
 
 
-<br>
-
-
+<br><br>
 
 
 
 <label>
-
 Description
-
 </label>
-
 
 <br>
 
-
-<textarea
-
-id="descriptionInput"
-
+<textarea id="descriptionInput"
 placeholder="Welcome to my website">
 
 </textarea>
 
 
-<br>
-<button
-id="saveButton"
-class="button">
-
-Save Website
-
-</button>
-
+<br><br>
 
 
 
 <label>
-
 Theme Color
-
 </label>
-
 
 <br>
 
@@ -274,52 +209,35 @@ Theme Color
 
 
 <option value="#92E81E">
-
 Green
-
 </option>
 
 
 <option value="#008080">
-
 Teal
-
 </option>
 
 
 <option value="#663399">
-
 Purple
-
 </option>
 
 
 <option value="#C2185B">
-
 Pink
-
 </option>
 
 
 <option value="#E02B1B">
-
 Red
-
-</option>
-
-
-<option value="#0066ff">
-
-Blue
-
 </option>
 
 
 </select>
 
 
-
 </div>
+
 
 
 
@@ -332,20 +250,14 @@ Blue
 
 
 <h2>
-
 Text Design
-
 </h2>
 
 
 
-
 <label>
-
 Font
-
 </label>
-
 
 <br>
 
@@ -354,78 +266,50 @@ Font
 
 
 <option value="Arial">
-
 Arial
-
 </option>
-
 
 
 <option value="Verdana">
-
 Verdana
-
 </option>
-
 
 
 <option value="Georgia">
-
 Georgia
-
 </option>
 
 
-
 <option value="Courier New">
-
 Courier New
-
 </option>
 
 
 </select>
 
 
+<br><br>
+
+
+<label>
+Text Size
+</label>
+
+<br>
+
+
+<input id="sizeInput"
+type="number"
+value="32">
 
 
 <br><br>
 
 
 
-
-
 <label>
-
-Text Size
-
+Alignment
 </label>
-
-
-<br>
-
-
-<input
-
-id="sizeInput"
-
-type="number"
-
-value="32">
-
-
-<br>
-
-
-
-
-
-<label>
-
-Position
-
-</label>
-
 
 <br>
 
@@ -434,23 +318,17 @@ Position
 
 
 <option value="left">
-
 Left
-
 </option>
 
 
 <option value="center">
-
 Center
-
 </option>
 
 
 <option value="right">
-
 Right
-
 </option>
 
 
@@ -462,14 +340,9 @@ Right
 
 
 
-
-
 <label>
-
 Style
-
 </label>
-
 
 <br>
 
@@ -478,23 +351,17 @@ Style
 
 
 <option value="normal">
-
 Normal
-
 </option>
 
 
 <option value="bold">
-
 Bold
-
 </option>
 
 
 <option value="italic">
-
 Italic
-
 </option>
 
 
@@ -510,22 +377,17 @@ Italic
 
 
 
+
 <div class="box">
 
 
 <h2>
-
 Add Elements
-
 </h2>
 
 
 
-<button
-
-id="addText"
-
-class="button toolButton">
+<button id="addText" class="button toolButton">
 
 + Add Text
 
@@ -533,12 +395,11 @@ class="button toolButton">
 
 
 
+<br>
 
-<button
 
-id="addButton"
 
-class="button toolButton">
+<button id="addButton" class="button toolButton">
 
 + Add Button
 
@@ -550,13 +411,48 @@ class="button toolButton">
 
 
 
-<button
+<label>
+Image URL
+</label>
 
-id="previewButton"
 
-class="button">
+<br>
+
+
+<input id="imageInput"
+placeholder="Paste image link">
+
+
+<br>
+
+
+<button id="addImage" class="button toolButton">
+
++ Add Image
+
+</button>
+
+
+
+<br><br>
+
+
+
+<button id="previewButton" class="button">
 
 Preview Website
+
+</button>
+
+
+
+<br><br>
+
+
+
+<button id="saveButton" class="button">
+
+Save Website
 
 </button>
 
@@ -567,7 +463,9 @@ Preview Website
 
 
 
+
 </div>
+
 
 
 
@@ -582,22 +480,14 @@ Preview Website
 
 
 <h2>
-
 Live Preview
-
 </h2>
 
 
 
-<div
+<div id="preview" class="previewBox">
 
-id="preview"
-
-class="previewBox">
-
-
-Your website preview appears here.
-
+Your preview appears here.
 
 </div>
 
@@ -612,9 +502,10 @@ Your website preview appears here.
 
 
 
-
-
 </div>
+
+
+
 
 
 
@@ -624,7 +515,6 @@ Your website preview appears here.
 © 2026 ClassPages Inc.
 
 </div>
-
 
 
 
