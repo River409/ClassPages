@@ -1,41 +1,74 @@
+console.log("LOGIN.JS LOADED");
+
+
 import {
     register,
     login
 } from "./auth.js";
 
 
-const email =
-document.getElementById("emailInput");
+const emailInput = document.getElementById("emailInput");
+const passwordInput = document.getElementById("passwordInput");
 
-const password =
-document.getElementById("passwordInput");
+const loginButton = document.getElementById("loginButton");
+const signupButton = document.getElementById("signupButton");
 
 
-document.getElementById("signupButton")
-.onclick = async () => {
+console.log({
+    emailInput,
+    passwordInput,
+    loginButton,
+    signupButton
+});
+
+
+signupButton.addEventListener("click", async () => {
+
+    console.log("SIGN UP CLICKED");
+
+
+    const email = emailInput.value;
+    const password = passwordInput.value;
+
 
     const user = await register(
-        email.value,
-        password.value
+        email,
+        password
     );
 
+
     if(user){
-        alert("Account created!");
+
+        alert(
+            "Account created successfully!"
+        );
+
     }
 
-};
+});
 
 
-document.getElementById("loginButton")
-.onclick = async () => {
+loginButton.addEventListener("click", async () => {
+
+    console.log("LOGIN CLICKED");
+
+
+    const email = emailInput.value;
+    const password = passwordInput.value;
+
 
     const user = await login(
-        email.value,
-        password.value
+        email,
+        password
     );
 
+
     if(user){
-        alert("Logged in!");
+
+        alert(
+            "Logged in successfully!"
+        );
+
     }
 
-};
+});
