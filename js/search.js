@@ -1,98 +1,87 @@
-
 import { db } from "./firebase.js";
+import { setCurrentDomain } from "./register.js";
 
 import {
     doc,
     getDoc
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-
 const searchInput = document.getElementById("domainSearch");
 const searchButton = document.getElementById("searchButton");
 const searchResult = document.getElementById("searchResult");
-
+const registerButton = document.getElementById("registerButton");
 
 searchButton.addEventListener("click", async () => {
 
     const domain = searchInput.value.trim().toLowerCase();
+
+    registerButton.style.display = "none";
 
     if (!domain) {
         searchResult.innerHTML = "❌ Please enter a domain.";
         return;
     }
 
-
     if (!domain.includes(".")) {
         searchResult.innerHTML = "❌ Invalid domain format.";
         return;
     }
 
-
     const parts = domain.split(".");
 
-    const name = parts[0];
+    if (parts.length !== 2) {
+        searchResult.innerHTML = "❌ Invalid domain format.";
+        return;
+    }
+
     const extension = parts[1];
 
+    try {
 
-    if (!name || !extension) {
-        searchResult.innerHTML = "❌ Invalid domain.";
-        return;
-    }
+        // Check if the registry exists
+        const extensionRef = doc(db, "extensions", extension);
+        const extensionSnap = await getDoc(extensionRef);
 
+        if (!extensionSnap.exists()) {
+            searchResult.innerHTML = `❌ The .${extension} registry does not exist.`;
+            return;
+        }
 
-    // Check if the extension exists
+        const extensionData = extensionSnap.data();
 
-    const extensionRef = doc(
-        db,
-        "extensions",
-        extension
-    );
+        // Check if the domain is already registered
+        const domainRef = doc(db, "domains", domain);
+        const domainSnap = await getDoc(domainRef);
 
+        if (domainSnap.exists()) {
 
-    const extensionSnap = await getDoc(extensionRef);
+            const domainData = domainSnap.data();
 
+            searchResult.innerHTML = `
+                ❌ <b>${domain}</b> is already registered.<br>
+                Owner: ${domainData.ownerEmail || "Unknown"}
+            `;
 
-    if (!extensionSnap.exists()) {
+            registerButton.style.display = "none";
 
-        searchResult.innerHTML =
-        `❌ The .${extension} registry does not exist.`;
+        } else {
 
-        return;
+            searchResult.innerHTML = `
+                ✅ <b>${domain}</b> is available!<br>
+                Registry: .${extension}<br>
+                Policy: ${extensionData.policy}
+            `;
 
-    }
+            setCurrentDomain(domain);
 
+            registerButton.style.display = "inline-block";
 
-    const extensionData = extensionSnap.data();
+        }
 
+    } catch (error) {
 
-    // Check if the full domain is already registered
-
-    const domainRef = doc(
-        db,
-        "domains",
-        domain
-    );
-
-
-    const domainSnap = await getDoc(domainRef);
-
-
-    if (domainSnap.exists()) {
-
-        const domainData = domainSnap.data();
-
-        searchResult.innerHTML = `
-            ❌ <b>${domain}</b> is already registered.<br>
-            Owner: ${domainData.owner || "Unknown"}
-        `;
-
-    } else {
-
-        searchResult.innerHTML = `
-            ✅ <b>${domain}</b> is available!<br>
-            Registry: .${extension}<br>
-            Policy: ${extensionData.policy}
-        `;
+        console.error(error);
+        searchResult.innerHTML = "❌ Error connecting to Firebase.";
 
     }
 
