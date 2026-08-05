@@ -1,0 +1,132 @@
+body{
+    margin:0;
+    background:#d9e6f7;
+    font-family:Verdana,Arial,sans-serif;
+    font-size:12px;
+    color:#000;
+}
+
+table{
+    border-collapse:collapse;
+}
+
+#container{
+    width:960px;
+    margin:15px auto;
+    background:white;
+    border:1px solid #4b6ea9;
+}
+
+.header{
+    background:linear-gradient(#3d79d6,#1f53a7);
+    color:white;
+    padding:20px;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:bold;
+    text-shadow:1px 1px #000;
+}
+
+.tagline{
+    font-size:11px;
+}
+
+.nav{
+    background:#295aa6;
+}
+
+.nav td{
+    padding:8px 18px;
+    color:white;
+    border-right:1px solid #4c79c0;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.sidebar{
+    width:190px;
+    background:#edf4ff;
+    border-right:1px solid #9cb5dc;
+    vertical-align:top;
+}
+
+.sidebar h3{
+    margin:0;
+    padding:8px;
+    background:#4a79c5;
+    color:white;
+    font-size:12px;
+}
+
+.sidebar ul{
+    margin:0;
+    padding:8px 20px;
+}
+
+.sidebar li{
+    margin:8px 0;
+}
+
+.content{
+    padding:20px;
+}
+
+.box{
+    border:1px solid #9fb7df;
+    margin-bottom:18px;
+}
+
+.box h2{
+    margin:0;
+    padding:8px;
+    background:#d7e7ff;
+    font-size:14px;
+}
+
+.boxbody{
+    padding:15px;
+}
+
+.searchbox{
+    text-align:center;
+    padding:20px;
+}
+
+.searchbox input[type=text]{
+    width:420px;
+    padding:7px;
+    font-size:16px;
+}
+
+.button{
+    background:linear-gradient(#ffd75d,#d99d00);
+    border:1px solid #885b00;
+    padding:8px 20px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.priceTable{
+    width:100%;
+}
+
+.priceTable th{
+    background:#5a83c6;
+    color:white;
+    padding:8px;
+}
+
+.priceTable td{
+    padding:8px;
+    border-bottom:1px solid #ddd;
+}
+
+.footer{
+    background:#1e4b90;
+    color:white;
+    text-align:center;
+    padding:12px;
+    font-size:11px;
+}
